@@ -1,7 +1,8 @@
 package com.bngferoz.encryption.elgamal.service;
 
-import java.math.BigInteger;
+
+import com.bngferoz.encryption.elgamal.dto.Output;
 
 public interface ElgamalEncryptionService {
-	public BigInteger elgamal(String s);
-}	
+	public Output elgamal(String s);
+}

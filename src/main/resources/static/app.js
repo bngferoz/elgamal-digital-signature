@@ -18,8 +18,14 @@ function connect() {
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/greetings', function (greeting) {
-            showGreeting(JSON.parse(greeting.body));
+        stompClient.subscribe('/topic/greetings', function (output) {
+			const txt = output.body;
+			const obj = JSON.parse(txt);
+			alert(obj.publicKey);
+			document.getElementById("publicKey").value = obj.publicKey;
+			document.getElementById("sigValue").value = obj.signature;
+			
+            showGreeting('Public Key: '+obj.publicKey+', Signature: '+obj.signature);
         });
     });
 }
@@ -35,9 +41,17 @@ function disconnect() {
 function sendName() {
     stompClient.send("/app/chat", {}, JSON.stringify({'name': $("#name").val()}));
 }
+function verifyFnc() {
+    alert("Calling Server Side method to verify signature with public key!");
+    stompClient.send("/app/verify", {}, JSON.stringify({'name': 'hellos'}));
+        
+}
 
 function showGreeting(message) {
-    $("#greetings").append("<tr><td>" + message.message + "</td></tr>");
+	alert(message);
+    $("#greetings").append("<tr><td>" + message + "</td></tr>");
+    $("#verifyBtn").prop("disabled", false);
+    
 }
 
 $(function () {
@@ -47,5 +61,6 @@ $(function () {
     $( "#connect" ).click(function() { connect(); });
     $( "#disconnect" ).click(function() { disconnect(); });
     $( "#send" ).click(function() { sendName(); });
+    $( "#verifyBtn" ).click(function() { verifyFnc(); });
 });
 

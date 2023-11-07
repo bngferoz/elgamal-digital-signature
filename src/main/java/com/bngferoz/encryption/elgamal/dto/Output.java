@@ -1,6 +1,5 @@
 package com.bngferoz.encryption.elgamal.dto;
 
-import java.math.BigInteger;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,6 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Greetings {
-	private BigInteger output;
+public class Output {
+	private String publicKey;
+	private String[] signature;
 }

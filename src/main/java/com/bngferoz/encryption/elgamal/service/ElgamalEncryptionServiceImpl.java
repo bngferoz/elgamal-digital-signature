@@ -1,49 +1,28 @@
 package com.bngferoz.encryption.elgamal.service;
 
 import java.math.BigInteger;
-import java.util.*;
 
 import org.springframework.stereotype.Service;
 
-import java.security.*;
+import com.bngferoz.encryption.elgamal.dto.Output;
+
 
 @Service
 public class ElgamalEncryptionServiceImpl implements ElgamalEncryptionService {
 
-	public BigInteger elgamal(String s) {
-		BigInteger p, b, c, secretKey;
-        Random sc = new SecureRandom();
-        secretKey = new BigInteger("12345678901234567890");
-        //
-        // public key calculation
-        //
-        System.out.println("secretKey = " + secretKey);
-        p = BigInteger.probablePrime(64, sc);
-        b = new BigInteger("3");
-        c = b.modPow(secretKey, p);
-        System.out.println("p = " + p);
-        System.out.println("b = " + b);
-        System.out.println("c = " + c);
-        //
-        // Encryption
-        //
-        BigInteger X = new BigInteger(s);
-        BigInteger r = new BigInteger(64, sc);
-        BigInteger EC = X.multiply(c.modPow(r, p)).mod(p);
-        BigInteger brmodp = b.modPow(r, p);
-        System.out.println("Plaintext = " + X);
-        System.out.println("r = " + r);
-        System.out.println("EC = " + EC);
-        System.out.println("b^r mod p = " + brmodp);
-        //
-        // Decryption
-        //
-        BigInteger crmodp = brmodp.modPow(secretKey, p);
-        BigInteger d = crmodp.modInverse(p);
-        BigInteger ad = d.multiply(EC).mod(p);
-        System.out.println("\n\nc^r mod p = " + crmodp);
-        System.out.println("d = " + d);
-        System.out.println("Alice decodes: " + ad);
-        return ad;
+	@Override
+	public Output elgamal(String s) {
+		BigInteger p = new BigInteger("23"); // Replace with a large prime number
+        BigInteger g = new BigInteger("5");  // Replace with a suitable generator
+
+        ElGamalKeyPair keyPair = new ElGamalKeyPair(p, g);
+        BigInteger message = new BigInteger("6"); // Replace with the message to be signed
+
+        String[] signature = ElGamalSignature.sign(message, keyPair.getP(), keyPair.getG(), keyPair.getX());
+
+        //boolean isVerified = ElGamalSignatureVerification.verify(message, signature[0], signature[1], keyPair.getP(), keyPair.getG(), keyPair.getY());
+
+        //System.out.println("Is Signature Verified: " + isVerified);
+        return new Output(keyPair.getY().toString(),signature);
 	}
 }
