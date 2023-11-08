@@ -21,7 +21,6 @@ function connect() {
         stompClient.subscribe('/topic/greetings', function (output) {
 			const txt = output.body;
 			const obj = JSON.parse(txt);
-			alert(obj.publicKey);
 			document.getElementById("publicKey").value = obj.publicKey;
 			document.getElementById("sigValue").value = obj.signature;
 			
@@ -39,11 +38,13 @@ function disconnect() {
 }
 
 function sendName() {
-    stompClient.send("/app/chat", {}, JSON.stringify({'name': $("#name").val()}));
+    stompClient.send("/app/chat", {}, JSON.stringify({'message': $("#name").val()}));
 }
 function verifyFnc() {
     alert("Calling Server Side method to verify signature with public key!");
-    stompClient.send("/app/verify", {}, JSON.stringify({'name': 'hellos'}));
+    var publicKey = document.getElementById("publicKey").value;
+    var sig = document.getElementById("sigValue").value;
+    stompClient.send("/app/verify", {}, JSON.stringify({'message': publicKey+'$'+sig}));
         
 }
 

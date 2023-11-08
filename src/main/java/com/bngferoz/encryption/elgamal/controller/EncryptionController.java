@@ -10,6 +10,8 @@ import com.bngferoz.encryption.elgamal.dto.Output;
 import com.bngferoz.encryption.elgamal.dto.Message;
 import com.bngferoz.encryption.elgamal.service.ElgamalEncryptionService;
 
+import lombok.val;
+
 
 @Controller
 public class EncryptionController {
@@ -30,6 +32,11 @@ public class EncryptionController {
 	public String verify(Message message) throws InterruptedException {
 		
 		Output returnThis =  elgamalEncryptionService.elgamal(message.getMessage());
+		String[] values;
+		if(message!=null && message.getMessage()!=null) {
+			String str = message.getMessage();
+			values = str.split("$");
+		}
 		return "";
 	}
 }
