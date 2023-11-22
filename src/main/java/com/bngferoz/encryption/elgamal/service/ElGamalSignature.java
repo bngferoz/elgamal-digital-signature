@@ -9,7 +9,7 @@ public class ElGamalSignature {
         SecureRandom random = new SecureRandom();
         BigInteger k = new BigInteger(q.bitLength() - 1, random);
 
-        BigInteger S1 = a.modPow(k, q);
+        BigInteger S1 = a.pow(k.intValue()).mod(q);
 
         BigInteger kInverse = k.modInverse(q.subtract(BigInteger.ONE));
 

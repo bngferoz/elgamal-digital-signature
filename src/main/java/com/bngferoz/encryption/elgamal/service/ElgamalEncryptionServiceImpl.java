@@ -12,8 +12,8 @@ public class ElgamalEncryptionServiceImpl implements ElgamalEncryptionService {
 
 	@Override
 	public Output elgamal(String s) {
-		BigInteger q = new BigInteger("23"); // Replace with a large prime number
-        BigInteger a = new BigInteger("5");  // Replace with a suitable generator
+		BigInteger q = new BigInteger("19"); // Replace with a large prime number
+        BigInteger a = new BigInteger("10");  // Replace with a suitable generator
 
         ElGamalKeyPair keyPair = new ElGamalKeyPair(q, a);
         BigInteger message = new BigInteger("6"); // Replace with the message to be signed

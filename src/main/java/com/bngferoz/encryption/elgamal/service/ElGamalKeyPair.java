@@ -21,7 +21,8 @@ public class ElGamalKeyPair {
 
     private void generateKeys() {
         SecureRandom random = new SecureRandom();
-        XA = new BigInteger(q.bitLength() - 1, random);
+        //XA = new BigInteger(q.bitLength() - 1, random);
+        XA = new BigInteger("16");
         YA = a.modPow(XA, q);
     }
 
