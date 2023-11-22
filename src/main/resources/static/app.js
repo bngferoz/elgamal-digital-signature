@@ -44,7 +44,7 @@ function verifyFnc() {
     alert("Calling Server Side method to verify signature with public key!");
     var publicKey = document.getElementById("publicKey").value;
     var sig = document.getElementById("sigValue").value;
-    stompClient.send("/app/verify", {}, JSON.stringify({'message': publicKey+'$'+sig}));
+    stompClient.send("/app/verify", {}, JSON.stringify({'message': publicKey+'@'+sig+'@'+$("#name").val()}));
         
 }
 

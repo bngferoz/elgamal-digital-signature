@@ -4,36 +4,56 @@ import java.security.SecureRandom;
 
 
 public class ElGamalKeyPair {
-    private BigInteger p;  // Large prime number
-    private BigInteger g;  // Generator
-    private BigInteger x;  // Private key
-    private BigInteger y;  // Public key
+    private BigInteger q;  // Large prime number
+    private BigInteger a;  // Generator
+    private BigInteger XA;  // Private key
+    private BigInteger YA;  // Public key
 
-    public ElGamalKeyPair(BigInteger p, BigInteger g) {
-        this.p = p;
-        this.g = g;
+    public ElGamalKeyPair() {
+       
+    }
+    
+    public ElGamalKeyPair(BigInteger q, BigInteger a) {
+        this.q = q;
+        this.a = a;
         generateKeys();
     }
 
     private void generateKeys() {
         SecureRandom random = new SecureRandom();
-        x = new BigInteger(p.bitLength() - 1, random);
-        y = g.modPow(x, p);
+        XA = new BigInteger(q.bitLength() - 1, random);
+        YA = a.modPow(XA, q);
     }
 
-    public BigInteger getP() {
-        return p;
+    public BigInteger getQ() {
+        return q;
     }
 
-    public BigInteger getG() {
-        return g;
+    public BigInteger getA() {
+        return a;
     }
 
-    public BigInteger getX() {
-        return x;
+    public BigInteger getXA() {
+        return XA;
     }
 
-    public BigInteger getY() {
-        return y;
+    public BigInteger getYA() {
+        return YA;
+    }
+    
+    public void setQ(BigInteger q) {
+        this.q = q;
+    }
+
+    public void setA(BigInteger a) {
+        this.a = a;
+    }
+
+    public void setXA(BigInteger XA) {
+        this.XA = XA;
+    }
+
+    public void setYA(BigInteger YA) {
+        this.YA = YA;
     }
 }

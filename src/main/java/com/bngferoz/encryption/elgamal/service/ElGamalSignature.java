@@ -5,20 +5,17 @@ import java.math.BigInteger;
 import java.security.*;
 
 public class ElGamalSignature {
-	public static String[] sign(BigInteger message, BigInteger p, BigInteger g, BigInteger x) {
+	public static String[] sign(BigInteger message, BigInteger q, BigInteger a, BigInteger privateKey) {
         SecureRandom random = new SecureRandom();
-        BigInteger k = new BigInteger(p.bitLength() - 1, random);
+        BigInteger k = new BigInteger(q.bitLength() - 1, random);
 
-        // Calculate r = g^k mod p
-        BigInteger r = g.modPow(k, p);
+        BigInteger S1 = a.modPow(k, q);
 
-        // Calculate k^-1 mod (p-1)
-        BigInteger kInverse = k.modInverse(p.subtract(BigInteger.ONE));
+        BigInteger kInverse = k.modInverse(q.subtract(BigInteger.ONE));
 
-        // Calculate s = (message - x*r) * k^-1 mod (p-1)
-        BigInteger s = (message.subtract(x.multiply(r))).multiply(kInverse).mod(p.subtract(BigInteger.ONE));
+        BigInteger S2 = (message.subtract(privateKey.multiply(S1))).multiply(kInverse).mod(q.subtract(BigInteger.ONE));
 
-        return new String[]{r.toString(), s.toString()};
+        return new String[]{S1.toString(), S2.toString()};
     }
 
 }
